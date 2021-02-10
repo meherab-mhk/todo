@@ -1,8 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
+from django.urls import reverse
 from .forms import TodoForm
 from .models import Todo
-
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 def todo_list(request):
@@ -19,7 +20,7 @@ def todo_detail(request, id=None):
     try:
         todo = Todo.objects.get(id=id)
     except Todo.DoesNotExist:
-        return
+        return None
     context = {
         "todo": todo
     }
@@ -40,3 +41,22 @@ def todo_create(request):
         "form": form
     }
     return render(request, "todo/todo_create.html",context)
+
+def todo_update(request, id=None):
+    try:
+        todo = Todo.objects.get(id=id)
+    except Todo.DoesNotExist:
+        return HttpResponse("404 object not found! <a href='/'>Home</a>")
+        
+    form = TodoForm(request.POST or None, instance=todo)
+    context = {
+        "form": form
+    }
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+        return render(request, "todo/todo_update.html", context)
+   
+    return render(request, "todo/todo_update.html", context) # get
