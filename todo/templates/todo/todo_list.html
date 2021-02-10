@@ -11,9 +11,12 @@
     {% else %}
     Hello Guest!!!
     {% endif %}
+    <a href="/create">Create a new Todo</a>
     <ul>
         {% for todo in todo_list %} 
-        <li>{{ todo.name }}, it's due to {{ todo.due_date|date:"d-m-Y" }}</li>
+        <li>
+            <a href="/{{ todo.id }}">{{ todo.name }}</a>, it's due to {{ todo.due_date|date:"d-m-Y" }}
+        </li><br/>
         {% endfor %}
     </ul>
 </body>
