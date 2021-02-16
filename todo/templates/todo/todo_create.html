@@ -1,25 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToDo</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
     <!-- {% if request.user.is_authenticated %}
     Hello {{request.user.username}}
     {% else %}
     Hello Guest!!!
     {% endif %} -->
-
-    <h4>Create a new Todo</h4>
-        <form action="" method="POST">
+<style>
+    .create{
+        margin: 0 auto;
+        text-align: center;
+    }
+</style>
+<div class="create card"style="width: 25rem;">
+    <div class="card-header">
+        <h4>Create a new Todo</h4>
+    </div>
+    
+        <form action="" method="POST" class="list-group">
             {% csrf_token %}
             {{ form.as_p}}  
-            <button type="submit">Create</button>
+            <button type="submit"class="btn btn-primary">Create</button>
         </form>
     
     
     </ul>
-</body>
-</html>
+</div>
+    
+{% endblock %}

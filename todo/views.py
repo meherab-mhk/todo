@@ -42,21 +42,18 @@ def todo_create(request):
     }
     return render(request, "todo/todo_create.html",context)
 
-def todo_update(request, id=None):
-    try:
-        todo = Todo.objects.get(id=id)
-    except Todo.DoesNotExist:
-        return HttpResponse("404 object not found! <a href='/'>Home</a>")
-        
+def todo_update(request, id):
+    todo = Todo.objects.get(id=id)
     form = TodoForm(request.POST or None, instance=todo)
+    if form.is_valid():
+        form.save()
+        return redirect('/')
     context = {
         "form": form
     }
-
-    if request.method == 'POST':
-        if form.is_valid():
-            form.save()
-            return redirect('/')
-        return render(request, "todo/todo_update.html", context)
-   
-    return render(request, "todo/todo_update.html", context) # get
+    return render(request, "todo/todo_update.html",context)
+    
+def todo_delete(request, id):
+    todo = Todo.objects.get(id=id)
+    todo.delete()
+    return redirect('/')

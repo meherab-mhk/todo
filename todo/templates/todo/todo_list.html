@@ -1,23 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToDo</title>
-</head>
-<body>
-    {% if request.user.is_authenticated %}
-    Hello {{request.user.username}}
-    {% else %}
-    Hello Guest!!!
-    {% endif %}
-    <a href="/create">Create a new Todo</a>
-    <ul>
-        {% for todo in todo_list %} 
-        <li>
-            <a href="/{{ todo.id }}">{{ todo.name }}</a>, it's due to {{ todo.due_date|date:"d-m-Y" }}
-        </li><br/>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .Heading {
+        text-align: center;
+        margin: 0 auto;
+    }
+    .heading h3{
+        margin-bottom: 20px;
+    }
+    .Heading ul{
+        list-style: none;
+    }
+    .Heading a{
+        margin-bottom: 20px;
+        text-decoration: none;
+    }
+    .Heading .card{
+        margin: 0 auto;
+    }
+</style>
+    <div class="Heading">
+        <h3>
+            {% if request.user.is_authenticated %}
+            Hello {{request.user.username}}
+            {% else %}
+            Hello Guest!!!
+            {% endif %}
+        </h3>
+        <a href="/create" class="btn btn-primary">Create a new Todo</a>
+        <div class="card" style="width: 25rem;">
+            <div class="card-header">
+                My ToDo List
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for todo in todo_list %} 
+                <li class="list-group-item">
+                    <a href="/{{ todo.id }}">{{ todo.name }}</a><!--it's due to {{ todo.due_date|date:"d-m-Y" }}-->
+                </li><br/>
+                {% endfor %}
+            </ul>
+        </div>
+   
+    </div>
+    
+{% endblock %}

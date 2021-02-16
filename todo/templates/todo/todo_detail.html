@@ -1,19 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToDo</title>
-</head>
-<body>
-    {% if request.user.is_authenticated %}
-    Hello {{request.user.username}}
-    {% else %}
-    Hello Guest!!!
-    {% endif %}
-    <ul>
-        The Todo name is: {{ todo.name }}<br/>
-        The due date is : {{ todo.due_date }}
-    </ul>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .detail h3{
+        text-align: center;
+        padding-bottom: 20px;
+    }
+    .detail .card{
+        margin: 0 auto;
+    }
+</style>
+    <div class="detail">
+        <h3>
+            {% if request.user.is_authenticated %}
+            Hello {{request.user.username}}
+            {% else %}
+            Hello Guest!!!
+            {% endif %}
+        </h3>
+        <div class="card" style="width: 50rem;">
+            <div class="card-body">
+                <ul>
+                 <h5 class="card-title"> Todo name is: </h5> {{ todo.name }}<br/>
+                  <h5 class="card-title">The due date is : </h5>  {{ todo.due_date }}<br/><br/>
+                    <a href="/{{ todo.id }}/update"class="btn btn-success">Update this todo</a>
+                    <a href="/{{ todo.id }}/delete" class="btn btn-danger">Delete this todo</a>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
