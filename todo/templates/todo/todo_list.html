@@ -37,7 +37,7 @@
                 {% for todo in todo_list %} 
                 <li class="list-group-item">
                     <a href="/{{ todo.id }}">{{ todo.name }}</a><!--it's due to {{ todo.due_date|date:"d-m-Y" }}-->
-                </li><br/>
+                </li>
                 {% endfor %}
             </ul>
         </div>
